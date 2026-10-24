@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BioPronta – Gerador de bio, legenda e hashtags para Instagram e TikTok</title>
+<meta name="description" content="Ferramentas grátis para redes sociais: gerador de bio, legendas e hashtags para Instagram e TikTok. Copie e use.">
 
+<!-- ANÚNCIOS: cole aqui o script do AdSense/Adsterra/Monetag quando for aprovado -->
+
+<style>
+:root{--bg:#f2f0ff;--ink:#1c1b3a;--muted:#5d5b80;--card:#ffffff;--line:#d9d5f5;--accent:#e0245e;--accent-ink:#ffffff;--soft:#e8e4ff}
+@media (prefers-color-scheme:dark){:root{--bg:#15142b;--ink:#efedff;--muted:#a9a6d0;--card:#1f1e3d;--line:#34325f;--accent:#ff5c8a;--accent-ink:#15142b;--soft:#2a2850}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+header h1{font-size:clamp(2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:12px 0 8px}
+header p{color:var(--muted);margin:0 0 20px;font-size:1.05rem}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tabs button{flex:1;min-width:max-content;font:inherit;font-weight:600;padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px;margin-top:14px}
+.panel[hidden]{display:none}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+.go{margin-top:16px;width:100%;font:inherit;font-weight:800;font-size:1.05rem;padding:14px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.out{margin-top:16px;display:grid;gap:10px}
+.item{background:var(--soft);border-radius:14px;padding:12px 14px;white-space:pre-wrap;word-break:break-word}
+.item button{display:block;margin-top:8px;font:inherit;font-weight:600;font-size:.9rem;padding:6px 12px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.count{color:var(--muted);font-size:.9rem;margin-top:4px}
+.ad{margin:18px 0;min-height:90px;border:1.5px dashed var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-align:center;padding:8px}
+footer{margin-top:28px;color:var(--muted);font-size:.9rem}
+footer h2{font-size:1rem;color:var(--ink);margin:18px 0 4px}
+@media (prefers-reduced-motion:no-preference){.item{animation:in .25s ease-out}@keyframes in{from{opacity:0;transform:translateY(4px)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Bio e legenda prontas em segundos</h1>
+  <p>Ferramentas grátis para Instagram e TikTok. Escolha, gere e copie.</p>
+</header>
+
+<!-- ANÚNCIO 1 (topo): troque o conteúdo desta div pelo código do anúncio -->
+<div class="ad" id="ad-top">Espaço para anúncio (topo)</div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-t="bio">Gerador de bio</button>
+  <button role="tab" aria-selected="false" data-t="leg">Legendas</button>
+  <button role="tab" aria-selected="false" data-t="hash">Hashtags</button>
+  <button role="tab" aria-selected="false" data-t="cont">Contador</button>
+</div>
+
+<section class="panel" id="bio">
+  <label for="b-nome">Seu nome ou nome do perfil</label>
+  <input id="b-nome" placeholder="Ex.: Ana Souza">
+  <label for="b-nicho">Sobre o que é seu perfil?</label>
+  <input id="b-nicho" placeholder="Ex.: moda, fitness, humor, receitas">
+  <label for="b-tom">Tom</label>
+  <select id="b-tom"><option value="leve">Leve e simpático</option><option value="direto">Direto e profissional</option><option value="humor">Divertido</option></select>
+  <button class="go" data-gen="bio">Gerar bios</button>
+  <div class="out" id="o-bio"></div>
+</section>
+
+<section class="panel" id="leg" hidden>
+  <label for="l-tema">Tema da foto ou vídeo</label>
+  <input id="l-tema" placeholder="Ex.: café da manhã, treino de perna, viagem">
+  <label for="l-tom">Tom</label>
+  <select id="l-tom"><option value="leve">Leve</option><option value="inspira">Inspirador</option><option value="humor">Divertido</option></select>
+  <button class="go" data-gen="leg">Gerar legendas</button>
+  <div class="out" id="o-leg"></div>
+</section>
+
+<section class="panel" id="hash" hidden>
+  <label for="h-tema">Palavras do seu conteúdo (separe por vírgula)</label>
+  <input id="h-tema" placeholder="Ex.: receita fit, bolo, sobremesa">
+  <button class="go" data-gen="hash">Gerar hashtags</button>
+  <div class="out" id="o-hash"></div>
+</section>
+
+<section class="panel" id="cont" hidden>
+  <label for="c-txt">Cole seu texto</label>
+  <textarea id="c-txt" placeholder="Cole aqui sua bio ou legenda"></textarea>
+  <div class="count" id="c-res">0 caracteres · bio do Instagram aceita até 150</div>
+</section>
+
+<!-- ANÚNCIO 2 (meio): troque o conteúdo desta div pelo código do anúncio -->
+<div class="ad" id="ad-mid">Espaço para anúncio (meio)</div>
+
+<footer>
+  <h2>Como funciona</h2>
+  <p>Você preenche poucos campos e o site monta várias opções de texto. Copie a que mais combina com você e ajuste do seu jeito.</p>
+  <h2>Política de privacidade</h2>
+  <p>Os textos digitados ficam só no seu aparelho e não são enviados nem guardados. Este site pode exibir anúncios de terceiros, que podem usar cookies para mostrar anúncios relevantes. Você pode gerenciar isso nas configurações do seu navegador.</p>
+  <p>Contato: <!-- troque pelo seu e-mail -->seuemail@exemplo.com</p>
+</footer>
+</div>
+
+<script>
+const pick=(a,n)=>[...a].sort(()=>Math.random()-.5).slice(0,n);
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const G={
+bio(){
+  const nome=v('b-nome')||'Eu',n=v('b-nicho')||'o que eu amo',t=v('b-tom');
+  const T={
+    leve:[`✨ ${nome}\n${cap(n)} com carinho\n📩 Chama no direct`,`${cap(n)} todo dia 💛\nAqui você é bem-vindo(a)\n👇 Confira`,`Compartilhando ${n} do meu jeito 🌿\n${nome}`,`${nome} • ${n}\nUm pouquinho de mim por aqui ☕`],
+    direto:[`${nome}\n${cap(n)}\n📩 Contato no link abaixo`,`${cap(n)} | ${nome}\nConteúdo toda semana\n👇 Saiba mais`,`Especialista em ${n}\n${nome}\n📍 Atendimento online`,`${cap(n)} com resultado\n${nome}\n🔗 Link na bio`],
+    humor:[`${nome} 🤡\n${cap(n)} e muito café\nSe rir, já valeu`,`Falo de ${n} e de qualquer outra coisa 😂\n${nome}`,`${cap(n)}, memes e crise existencial\n${nome} 🙃`,`Aqui o assunto é ${n}\n(e o resto eu improviso) ${nome}`]};
+  return pick(T[t],4)},
+leg(){
+  const tema=v('l-tema')||'meu dia',t=v('l-tom');
+  const T={
+    leve:[`${cap(tema)} e eu, combinação perfeita 💛`,`Dia bom é dia de ${tema}.`,`Pequenos momentos, grandes sorrisos. ${cap(tema)} ✨`,`Sem pressa, só ${tema} 🌿`],
+    inspira:[`${cap(tema)}: um passo de cada vez.`,`Quem começa por ${tema} já está na frente. Continue.`,`Hoje é dia de ${tema}. Amanhã você agradece.`,`Constância vence talento. ${cap(tema)} todo dia.`],
+    humor:[`Eu: vou ser discreto(a). Também eu: ${tema} 😂`,`${cap(tema)}? Fui eu, sim.`,`Isso aqui é ${tema} e eu não vou me explicar 🙃`,`Meu plano era descansar, mas apareceu ${tema}.`]};
+  return pick(T[t],4)},
+hash(){
+  const ws=v('h-tema').split(',').map(s=>s.trim().toLowerCase().replace(/[^a-z0-9à-ú ]/gi,'').replace(/\s+/g,'')).filter(Boolean);
+  if(!ws.length)return ['Digite pelo menos uma palavra.'];
+  const ex=['dicas','brasil','diario','amor','inspiracao','reels','viral','explore'];
+  const base=ws.map(w=>'#'+w);
+  const mix=ws.flatMap(w=>['dicas','brasil','diario'].map(e=>'#'+w+e));
+  return [base.join(' '),pick(mix,8).join(' '),[...pick(base,3),...pick(ex,5).map(e=>'#'+e)].join(' ')]}
+};
+function v(id){return document.getElementById(id).value.trim()}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+document.querySelectorAll('[data-gen]').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.gen,o=document.getElementById('o-'+k);
+  o.innerHTML=G[k]().map(t=>`<div class="item">${esc(t)}<button type="button">Copiar</button></div>`).join('');
+  o.querySelectorAll('button').forEach(c=>c.onclick=async()=>{
+    const txt=c.parentElement.firstChild.textContent;
+    try{await navigator.clipboard.writeText(txt);c.textContent='Copiado!'}catch(e){c.textContent='Selecione e copie'}
+    setTimeout(()=>c.textContent='Copiar',1500)})});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==b.dataset.t)});
+document.getElementById('c-txt').oninput=e=>{
+  const t=e.target.value,w=t.trim()?t.trim().split(/\s+/).length:0;
+  document.getElementById('c-res').textContent=`${[...t].length} caracteres · ${w} palavras · bio do Instagram aceita até 150`};
+</script>
+</body>
+  </html>
+  
